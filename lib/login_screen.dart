@@ -1,4 +1,6 @@
+import 'package:ayurvedahospital/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -6,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final loginState = Provider.of<Logincontroller>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -23,7 +25,6 @@ class LoginScreen extends StatelessWidget {
             color: Colors.black.withOpacity(0.3),
           ),
 
-          // Login container in bottom half
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -71,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Handle login
+                        
                       },
                       child: const Text("Login"),
                     ),
