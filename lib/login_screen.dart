@@ -1,55 +1,86 @@
-import 'package:ayurvedahospital/login_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final loginState = Provider.of<Logincontroller>(context);
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+      body: Stack(
+        children: [
+          // Background image
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/ayurveda.webp',
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 12),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-                        SizedBox(height: 24),
-            loginState.isLoading
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: () async {
-                      final scaffoldMessenger = ScaffoldMessenger.of(context);
-                      bool success = await loginState.login(
-                        usernameController.text,
-                        passwordController.text,
-                      );
+          ),
 
-                      scaffoldMessenger.showSnackBar(SnackBar(
-                        content: Text(
-                          success ? 'Login successful' : 'Login failed',
-                        ),
-                      ));
-                    },
-                    child: Text("Login"),
+          // Semi-transparent dark overlay (optional)
+          Container(
+            color: Colors.black.withOpacity(0.3),
+          ),
+
+          // Login container in bottom half
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: double.infinity,
+              height: size.height * 0.5,
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, -4),
+                  )
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Login Or Register to Book Your Appointments",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-          ],
-        ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: "Username",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(color: const Color.fromARGB(255, 203, 200, 200))
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle login
+                      },
+                      child: const Text("Login"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
